@@ -1,11 +1,11 @@
-# Burger Nota 1000 API
+# Burger Nota 1000 - API
 
 ## Índice
 
-* [1. Sobre o Projeto](##1-sobre-o-projeto)
-* [2. Endpoints](##2-endpoints)
-* [3. Tecnologias Utilizadas](##3-tecnologias-utilizadas)
-* [4. Implementações Futuras](##4-implementações-futuras)
+* [1. Sobre o Projeto](#1-sobre-o-projeto)
+* [2. Endpoints](#2-endpoints)
+* [3. Tecnologias Utilizadas](#3-tecnologias-utilizadas)
+* [4. Implementações Futuras](#4-implementações-futuras)
 
 ---
 
