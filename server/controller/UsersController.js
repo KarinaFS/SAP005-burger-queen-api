@@ -26,7 +26,7 @@ class UsersController {
   static async createUser(req, res) {
     try {
       const { userName, email, password, role, restaurant } = req.body;
-      const createUser = await models.User.create({
+      const postUser = await models.User.create({
         userName,
         email,
         password,
@@ -35,7 +35,7 @@ class UsersController {
         createdAt: new Date(),
         updateAt: new Date()
       })
-      return res.status(200).json(createUser);
+      return res.status(201).json(postUser);
     } catch (error) {
       return res.status(400).json({ error: "Could not create user" });
     }
@@ -44,7 +44,7 @@ class UsersController {
   static async updateUser(req, res) {
     try {
       const { userName, email, password, role, restaurant } = req.body;
-      const updateUser = await models.User.update({
+      const putUser = await models.User.update({
         userName,
         email,
         password,
@@ -57,7 +57,7 @@ class UsersController {
           }
         }
       );
-      return res.status(200).json(updateUser);
+      return res.status(200).json(putUser);
     } catch (error) {
       return res.status(400).json({ error: "Could not update user" });
     }
@@ -65,12 +65,12 @@ class UsersController {
 
   static async deleteUser (req, res) {
     try {
-      const deleteUser = await models.User.destroy({
+      const destroyUser = await models.User.destroy({
         where: {
           id: req.params.uid
         }
       });
-      return res.status(200).json(deleteUser);
+      return res.status(200).json(destroyUser);
     } catch (error) {
       return res.status(400).json({ error: "It was not possible to delete the user" });
     }

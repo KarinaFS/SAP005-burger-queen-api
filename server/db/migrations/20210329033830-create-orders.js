@@ -8,6 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'User',
+          key: 'id'
+        }
+      },
       client_name: {
         type: Sequelize.STRING
       },
@@ -15,7 +22,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "pending"
       },
       createdAt: {
         allowNull: false,

@@ -26,7 +26,7 @@ class ProductsController {
   static async createProduct(req, res) {
     try {
       const { name, price, flavor, complement, image, type, sub_type } = req.body;
-      const createProduct = await models.Products.create({
+      const postProduct = await models.Products.create({
         name,
         price,
         flavor,
@@ -37,7 +37,7 @@ class ProductsController {
         createdAt: new Date(),
         updateAt: new Date()
       })
-      return res.status(200).json(createProduct);
+      return res.status(201).json(postProduct);
     } catch (error) {
       return res.status(400).json({ error: "Could not create a product" });
     }
@@ -46,7 +46,7 @@ class ProductsController {
   static async updateProduct(req, res) {
     try {
       const { name, price, flavor, complement, image, type, sub_type } = req.body;
-      const updateProduct = await models.Products.update({
+      const putProduct = await models.Products.update({
         name,
         price,
         flavor,
@@ -61,7 +61,7 @@ class ProductsController {
           }
         }
       );
-      return res.status(200).json(updateProduct);
+      return res.status(200).json(putProduct);
     } catch (error) {
       return res.status(400).json({ error: "The product could not be updated" });
     }
@@ -69,12 +69,12 @@ class ProductsController {
 
   static async deleteProduct (req, res) {
     try {
-      const deleteProduct = await models.Products.destroy({
+      const destroyProduct = await models.Products.destroy({
         where: {
           id: req.params.productId
         }
       });
-      return res.status(200).json(deleteProduct);
+      return res.status(200).json(destroyProduct);
     } catch (error) {
       return res.status(400).json({ error: "It was not possible to delete the product" });
     }

@@ -7,15 +7,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Orders.belongsToMany(models.Products, {
         through: 'ProductsOrders',
-        as: 'orders',
+        as: 'products',
         foreignKey: 'orderId',
+        onDelete: 'CASCADE'
       });
       Orders.belongsTo(models.User, {
-        foreignKey: 'uid',
+        foreignKey: 'userId',
       });
     }
   };
   Orders.init({
+    userId: DataTypes.INTEGER,
     client_name: DataTypes.STRING,
     table: DataTypes.INTEGER,
     status: DataTypes.STRING

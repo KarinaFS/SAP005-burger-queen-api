@@ -13,9 +13,7 @@ class OrdersController {
   static async getOrderById(req, res) {
     try {
       const orderId = await models.Orders.findAll({
-        where: {
-          id: req.params.orderId
-        }
+        where: { id: req.params.orderId }
       });
       return res.status(200).json(orderId);
     } catch (error) {
@@ -25,18 +23,28 @@ class OrdersController {
 
   static async createOrder(req, res) {
     try {
-      const createOrder = await models.Orders.create(req.body);
-      return res.status(200).json(createOrder);
+      const postOrder = await models.Orders.create({
+        userId: req.body.userId,
+        client_name: req.body.client_name,
+        table: req.body.table,
+        status: req.body.status
+      })
+      const productOrder = await models.ProductsOrders.create({
+        orderId: postOrder.id,
+        productId: req.body.productId,
+        qtd: req.body.qtd
+      })
+      return res.status(201).json({ postOrder, productOrder });
     } catch (error) {
       return res.status(400).json({ error: "Could not create order" });
     }
   }
 
   static async updateOrder(req, res) {
-    const { updateOrder } = req.body;
+    const putOrder = req.body;
     try {
-      await models.Orders.update({ updateOrder }, {
-      where: {id: req.params.orderId}
+      await models.Orders.update(putOrder, {
+        where: { id: req.params.orderId }
       });
       return res.status(200).json({ message: "Orders updated sucessfully" });
     } catch (error) {
@@ -44,7 +52,7 @@ class OrdersController {
     }
   }
 
-  static async deleteOrder (req, res) {
+  static async deleteOrder(req, res) {
     try {
       const destroyOrder = await models.Orders.destroy({
         where: {
