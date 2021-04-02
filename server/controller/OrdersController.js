@@ -64,6 +64,6 @@ class OrdersController {
       return res.status(400).json({ error: "It was not possible to delete the order" });
     }
   }
-} 
+}
 
 module.exports = OrdersController
