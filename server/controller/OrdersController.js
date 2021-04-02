@@ -3,7 +3,33 @@ const models = require("../db/models")
 class OrdersController {
   static async getAllOrders(req, res) {
     try {
-      const getOrders = await models.Orders.findAll()
+      const getOrders = await models.Orders.findAll({
+        include: [{
+          model: models.Products,
+          as: 'products',
+          required: false,
+          attributes: [
+            'id',
+            'name',
+            'price',
+            'flavor',
+            'complement',
+            'type',
+            'subType'
+          ],
+          through: {
+            model: models.ProductsOrders,
+            as: 'qtd',
+            attributes: ['qtd']
+          }
+        },
+        {
+          model: models.User,
+          required: false,
+          attributes: ['userName', 'id']
+        }
+      ]
+      })
       return res.status(200).json(getOrders);
     } catch (error) {
       return res.status(400).json({ error: "Orders not found" });
@@ -13,9 +39,32 @@ class OrdersController {
   static async getOrderById(req, res) {
     try {
       const orderId = await models.Orders.findAll({
-        where: {
-          id: req.params.orderId
+        where: { id: req.params.orderId },
+        include: [{
+          model: models.Products,
+          as: 'products',
+          required: false,
+          attributes: [
+            'id',
+            'name',
+            'price',
+            'flavor',
+            'complement',
+            'type',
+            'subType'
+          ],
+          through: {
+            model: models.ProductsOrders,
+            as: 'qtd',
+            attributes: ['qtd']
+          }
+        },
+        {
+          model: models.User,
+          required: false,
+          attributes: ['userName', 'id']
         }
+      ]
       });
       return res.status(200).json(orderId);
     } catch (error) {
@@ -25,8 +74,20 @@ class OrdersController {
 
   static async createOrder(req, res) {
     try {
-      const createOrder = await models.Orders.create(req.body);
-      return res.status(200).json(createOrder);
+      const createdOrder = await models.Orders.create(req.body);
+      req.body.Products.map(async (item) => {
+        const findProduct = await models.Products.findByPk(item.productId);
+        if (!findProduct) {
+          return res.status(400).json("Product not found");
+        }
+        const productOrder = {
+          orderId: createdOrder.id,
+          productId: item.productId,
+          qtd: item.qtd
+        }
+        await models.ProductsOrders.create(productOrder);
+      })
+      return res.status(201).json(createdOrder);
     } catch (error) {
       return res.status(400).json({ error: "Could not create order" });
     }
