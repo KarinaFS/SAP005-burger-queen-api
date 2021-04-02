@@ -2,7 +2,7 @@
 
 ## Índice
 
-* [1. Sobre o Projeto](#2-sobre-o-projeto)
+* [1. Sobre o Projeto](#1-sobre-o-projeto)
 * [2. Endpoints](#2-endpoints)
 * [3. Tecnologias Utilizadas](#3-tecnologias-utilizadas)
 * [4. Implementações Futuras](#4-implementações-futuras)
@@ -74,5 +74,7 @@ A interface front-end da aplicação já foi criada, você pode acessar clicando
 * Documentação da API
 * Testes unitários para cada função
 * Testes _"end to end"_ ou _e2e_ (de uma ponta a outra)
+
+---
 
 Desenvolvido por [Karina Santos](https://github.com/KarinaFS) na <[Laboratoria](https://github.com/Laboratoria)>.
